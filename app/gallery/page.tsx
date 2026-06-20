@@ -27,7 +27,7 @@ export default function GalleryPage() {
             Our <span className="accent">work</span>
           </>
         }
-        subtitle="A showcase of residential, commercial, and industrial cleaning across the GTA."
+        subtitle="A showcase of residential, commercial, and industrial cleaning across Durham Region and GTA."
       />
 
       <section className="section section-white">

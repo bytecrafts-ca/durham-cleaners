@@ -1,7 +1,7 @@
 interface SectionHeaderProps {
   tag: string;
   title: React.ReactNode;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
 }
 
 export function SectionHeader({ tag, title, subtitle }: SectionHeaderProps) {

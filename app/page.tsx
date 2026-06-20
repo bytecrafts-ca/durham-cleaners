@@ -181,9 +181,7 @@ export default function HomePage() {
 
       <section className="section section-white">
         <div className="container-site text-center">
-          <p className="location-detail">
-            Serving Courtice, Oshawa, Bowmanville, Whitby, Ajax, Pickering &amp; the Durham Region.
-          </p>
+          <p className="location-detail">{siteConfig.serviceAreaLabel}</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link href="/gallery" className="btn btn-outline inline-flex">
               View gallery

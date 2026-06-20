@@ -12,7 +12,15 @@ export function ProcessSteps() {
               Simple <span className="accent">3-step</span> process
             </>
           }
-          subtitle="Book, we clean, you relax — it's that easy."
+          subtitle={
+            <>
+              You Book, We Clean, and you Relax.
+              <br />
+              -
+              <br />
+              It&apos;s That Easy
+            </>
+          }
         />
         <div className="process-grid">
           {siteConfig.processSteps.map((step, index) => (

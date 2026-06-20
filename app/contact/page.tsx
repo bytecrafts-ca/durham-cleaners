@@ -22,7 +22,7 @@ export default function ContactPage() {
       <PageHero
         title={
           <>
-            Contact <span className="accent">&amp; request</span>
+            Contact Us <span className="accent">Today</span>
           </>
         }
         subtitle="Call, email, or fill out the form below to receive a quote."

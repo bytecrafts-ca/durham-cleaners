@@ -13,8 +13,9 @@ export function ServicesBanner() {
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-sm text-[var(--gray-500)]">{serviceNote}</p>
-            <p className="mt-3 text-sm font-semibold text-brand-dark">
-              {discounts.firstTime} · {discounts.biWeekly}
+            <p className="mt-3 space-y-1 text-sm font-semibold text-brand-dark">
+              <span className="block">{discounts.firstTime}</span>
+              <span className="block">{discounts.biWeekly}</span>
             </p>
           </div>
         </div>

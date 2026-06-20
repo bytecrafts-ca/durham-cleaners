@@ -5,7 +5,7 @@ export const siteConfig = {
   name: "Durham Cleaners",
   logoText: "DURHAM CLEANERS",
   instagramHandle: "@durhamcleaners",
-  tagline: "Home Cleaning — Durham Region & the GTA",
+  tagline: "Premium cleaning services serving Durham Region and GTA",
   heroSubtitle:
     "Durham Cleaners offer the best quality cleaning service in Durham Region and the GTA.",
   homeIntro:
@@ -74,7 +74,7 @@ export const siteConfig = {
       "https://www.google.com/maps/search/?api=1&query=Durham+Cleaners+57+Foxhunt+Trail+Courtice+ON",
   },
   discounts: {
-    firstTime: "10% off for first-time customers",
+    firstTime: "15% off for first-time customers",
     biWeekly: "15% off for bi-weekly cleaning bookings",
   },
   serviceNote:
@@ -102,6 +102,7 @@ export const siteConfig = {
   },
   requestNote:
     "Tell us what you need and your preferred day and time — we will get in contact with you within 4 hours.",
+  serviceAreaLabel: "Serving Durham Region and GTA",
   timePreferenceOptions: [
     "Morning (8am – 12pm)",
     "Afternoon (12pm – 5pm)",
@@ -165,7 +166,7 @@ export const services = [
     id: "one-time",
     title: "One-Time Cleaning",
     description:
-      "A quick, thorough clean of your entire home — kitchens, bathrooms, living rooms, bedrooms, and more. Vacuuming, mopping, dusting, and spot cleaning. Ideal for pre-event prep or a spring clean. 10% off for first-time customers.",
+      "A quick, thorough clean of your entire home — kitchens, bathrooms, living rooms, bedrooms, and more. Vacuuming, mopping, dusting, and spot cleaning. Ideal for pre-event prep or a spring clean. 15% off for first-time customers.",
   },
   {
     id: "ongoing",
@@ -232,7 +233,7 @@ export const faqs = [
   },
   {
     q: "Are there any discounts?",
-    a: "First-time customers receive 10% off. Bi-weekly ongoing cleaning bookings receive 15% off.",
+    a: "First-time customers receive 15% off. Bi-weekly ongoing cleaning bookings receive 15% off.",
   },
   {
     q: "How long have you been in business?",

@@ -8,7 +8,7 @@ import { services, siteConfig } from "@/lib/site";
 export const metadata = createPageMetadata({
   title: "Cleaning Services — Residential, Commercial & Industrial",
   description:
-    "One-time, ongoing, deep, move-in/out, post-renovation, Airbnb, and commercial cleaning across Durham Region. 10% off first-time customers.",
+    "One-time, ongoing, deep, move-in/out, post-renovation, Airbnb, and commercial cleaning across Durham Region. 15% off first-time customers.",
   path: "/services",
   keywords: ["cleaning services Durham", "house cleaning Courtice", "commercial cleaning Oshawa"],
 });

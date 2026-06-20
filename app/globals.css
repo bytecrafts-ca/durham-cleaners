@@ -1152,7 +1152,13 @@ h5 {
   color: var(--gray-500);
 }
 
-.footer-follow-link {
+.footer-follow-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer-links .footer-follow-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;

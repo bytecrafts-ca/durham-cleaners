@@ -22,7 +22,7 @@ export function ReviewsSection({ showHeader = false }: { showHeader?: boolean })
                 What clients <span className="accent">say</span>
               </>
             }
-            subtitle="Real feedback from homeowners, REALTORS®, and landlords across Durham Region."
+            subtitle="Real feedback from homeowners, REALTORS®, and landlords across Durham Region and GTA."
           />
         )}
 

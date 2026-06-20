@@ -6,7 +6,7 @@ import { breadcrumbJsonLd, createPageMetadata } from "@/lib/seo";
 export const metadata = createPageMetadata({
   title: "Testimonials — Client Reviews",
   description:
-    "Read what homeowners, REALTORS®, and landlords across Durham Region say about Durham Cleaners.",
+    "Read what homeowners, REALTORS®, and landlords across Durham Region and GTA say about Durham Cleaners.",
   path: "/testimonials",
 });
 
@@ -25,7 +25,7 @@ export default function TestimonialsPage() {
             What clients <span className="accent">say</span>
           </>
         }
-        subtitle="Real feedback from homeowners, REALTORS®, and landlords across Durham Region."
+        subtitle="Real feedback from homeowners, REALTORS®, and landlords across Durham Region and GTA."
       />
 
       <ReviewsSection />
