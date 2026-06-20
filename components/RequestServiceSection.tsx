@@ -104,12 +104,14 @@ export function RequestServiceForm({ compact = false }: RequestServiceFormProps)
         </div>
         <div className="form-field">
           <label htmlFor="preferredDay">Preferred day</label>
-          <input id="preferredDay" name="preferredDay" type="date" />
+          <input id="preferredDay" name="preferredDay" type="date" required />
         </div>
         <div className="form-field">
           <label htmlFor="preferredTime">Preferred time</label>
-          <select id="preferredTime" name="preferredTime" defaultValue="">
-            <option value="">Choose a time</option>
+          <select id="preferredTime" name="preferredTime" required defaultValue="">
+            <option value="" disabled>
+              Choose a time
+            </option>
             {siteConfig.timePreferenceOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
@@ -123,6 +125,7 @@ export function RequestServiceForm({ compact = false }: RequestServiceFormProps)
             <textarea
               id="message"
               name="message"
+              required
               placeholder="Any allergies, access instructions, or special requests."
             />
           </div>

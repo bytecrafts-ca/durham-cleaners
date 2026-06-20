@@ -1,5 +1,5 @@
 import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
-import { Footer } from "@/components/Footer";
+import { SiteFooter } from "@/components/SiteFooter";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { MobileStickyCTA } from "@/components/MobileStickyCTA";
@@ -29,7 +29,7 @@ export default function RootLayout({
         <JsonLd data={globalJsonLd()} />
         <Header />
         <main>{children}</main>
-        <Footer />
+        <SiteFooter />
         <MobileStickyCTA />
       </body>
     </html>

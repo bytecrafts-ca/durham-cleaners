@@ -77,14 +77,6 @@ export const siteConfig = {
     firstTime: "10% off for first-time customers",
     biWeekly: "15% off for bi-weekly cleaning bookings",
   },
-  serviceHighlights: [
-    "Residential cleaning",
-    "Commercial & industrial",
-    "Move-in / move-out",
-    "Deep & post-renovation",
-    "Airbnb turnovers",
-    "Real estate pre-listing",
-  ] as const,
   serviceNote:
     "Eco-friendly green cleaning products. We handle the hard-to-reach places where dirt and dust accumulate.",
   processSteps: [
@@ -123,6 +115,7 @@ export const navLinks = [
   { href: "/#request", label: "Request" },
   { href: "/services", label: "Services" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/testimonials", label: "Testimonials" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;
@@ -145,11 +138,6 @@ export const features = [
     description:
       "Top-tier industrial cleaning for rigorous environments — operational efficiency and compliance standards.",
     icon: "factory",
-  },
-  {
-    title: "Durham & GTA",
-    description: "Courtice, Oshawa, Bowmanville, Whitby, Ajax, Pickering, and the Greater Toronto Area.",
-    icon: "map",
   },
 ] as const;
 

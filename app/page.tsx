@@ -13,7 +13,6 @@ import { HomeAboutTeaser } from "@/components/HomeAboutTeaser";
 import { JsonLd } from "@/components/JsonLd";
 import { ProcessSteps } from "@/components/ProcessSteps";
 import { RequestServiceSection } from "@/components/RequestServiceSection";
-import { ReviewsSection } from "@/components/ReviewsSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ServicesBanner } from "@/components/ServicesBanner";
 import { faqJsonLd } from "@/lib/seo";
@@ -50,7 +49,7 @@ export default function HomePage() {
           <div className="hero-text">
             <p className="hero-eyebrow">{siteConfig.tagline}</p>
             <h1>
-              Home &amp; commercial <span className="accent">cleaning</span>
+              Residential &amp; commercial <span className="accent">cleaning</span>
             </h1>
             <p className="hero-sub">{siteConfig.heroSubtitle}</p>
             <a
@@ -110,7 +109,7 @@ export default function HomePage() {
               </>
             }
           />
-          <div className="features-grid md:grid-cols-2 lg:grid-cols-4">
+          <div className="features-grid md:grid-cols-2 lg:grid-cols-3">
             {features.map((f) => {
               const Icon = featureIcons[f.icon as keyof typeof featureIcons] ?? Sparkles;
               return (
@@ -185,7 +184,6 @@ export default function HomePage() {
           <p className="location-detail">
             Serving Courtice, Oshawa, Bowmanville, Whitby, Ajax, Pickering &amp; the Durham Region.
           </p>
-          <p className="location-detail">{siteConfig.contact.address}</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link href="/gallery" className="btn btn-outline inline-flex">
               View gallery
@@ -201,8 +199,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <ReviewsSection />
     </>
   );
 }

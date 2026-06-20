@@ -2,7 +2,7 @@ import { Sparkles } from "lucide-react";
 import { siteConfig } from "@/lib/site";
 
 export function ServicesBanner() {
-  const { serviceHighlights, serviceNote, discounts } = siteConfig;
+  const { serviceNote, discounts } = siteConfig;
 
   return (
     <section className="border-b border-[var(--gray-100)] bg-white py-10">
@@ -12,16 +12,8 @@ export function ServicesBanner() {
             <Sparkles className="h-7 w-7" aria-hidden />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold uppercase tracking-widest text-brand-dark">
-              Services we offer
-            </p>
-            <ul className="mt-2 space-y-1 font-display text-lg font-bold leading-snug text-navy sm:text-xl">
-              {serviceHighlights.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-            <p className="mt-3 text-sm text-[var(--gray-500)]">{serviceNote}</p>
-            <p className="mt-2 text-sm font-semibold text-brand-dark">
+            <p className="text-sm text-[var(--gray-500)]">{serviceNote}</p>
+            <p className="mt-3 text-sm font-semibold text-brand-dark">
               {discounts.firstTime} · {discounts.biWeekly}
             </p>
           </div>

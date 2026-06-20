@@ -1,4 +1,3 @@
-import { ContactLinks } from "@/components/ContactLinks";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { RequestServiceSection } from "@/components/RequestServiceSection";
@@ -26,16 +25,10 @@ export default function ContactPage() {
             Contact <span className="accent">&amp; request</span>
           </>
         }
-        subtitle="Call, email, or fill out the form — we will get in contact with you within 4 hours."
+        subtitle="Call, email, or fill out the form below to receive a quote."
       />
 
       <RequestServiceSection id="contact-form" />
-
-      <section className="section section-white">
-        <div className="container-site max-w-2xl">
-          <ContactLinks />
-        </div>
-      </section>
     </>
   );
 }

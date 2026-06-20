@@ -21,25 +21,27 @@ function GoogleIcon({ className }: { className?: string }) {
   );
 }
 
-export function Footer() {
+export function Footer({ hideCta = false }: { hideCta?: boolean }) {
   const { contact, social, instagramHandle } = siteConfig;
 
   return (
     <footer className="footer">
-      <section className="cta-section">
-        <div className="container-site relative">
-          <h2>Ready for a spotless space?</h2>
-          <p>Request service, call, or email — we will get in contact with you within 4 hours.</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/#request" className="btn btn-primary shimmer-btn">
-              Request Service
-            </Link>
-            <a href={`tel:${contact.phoneTel}`} className="btn btn-outline">
-              {contact.phone}
-            </a>
+      {!hideCta && (
+        <section className="cta-section">
+          <div className="container-site relative">
+            <h2>Ready for a spotless space?</h2>
+            <p>Request service, call, or email — we will get in contact with you within 4 hours.</p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/#request" className="btn btn-primary shimmer-btn">
+                Request Service
+              </Link>
+              <a href={`tel:${contact.phoneTel}`} className="btn btn-outline">
+                {contact.phone}
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <div className="footer-grid px-8">
         <div className="footer-brand">

@@ -10,19 +10,21 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-export function ReviewsSection() {
+export function ReviewsSection({ showHeader = false }: { showHeader?: boolean }) {
   return (
     <section className="section section-light" id="reviews">
       <div className="container-site">
-        <SectionHeader
-          tag="Reviews"
-          title={
-            <>
-              What clients <span className="accent">say</span>
-            </>
-          }
-          subtitle="Real feedback from homeowners, REALTORS®, and landlords across Durham Region."
-        />
+        {showHeader && (
+          <SectionHeader
+            tag="Reviews"
+            title={
+              <>
+                What clients <span className="accent">say</span>
+              </>
+            }
+            subtitle="Real feedback from homeowners, REALTORS®, and landlords across Durham Region."
+          />
+        )}
 
         <div className="reviews-grid">
           {reviews.map((review) => (
