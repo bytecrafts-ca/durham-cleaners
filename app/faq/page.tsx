@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
-import { breadcrumbJsonLd, createPageMetadata, faqJsonLd } from "@/lib/seo";
+import { buildPageJsonLd, createPageMetadata, faqJsonLd } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
   title: "FAQ — Cleaning Service Questions",
@@ -15,15 +15,23 @@ export default function FAQPage() {
   return (
     <>
       <JsonLd
-        data={[
-          breadcrumbJsonLd([
+        data={buildPageJsonLd({
+          path: "/faq",
+          title: "FAQ — Cleaning Service Questions",
+          description:
+            "Common questions about booking, areas served, eco-friendly products, discounts, and commercial cleaning with Durham Cleaners.",
+          breadcrumbs: [
             { name: "Home", path: "/" },
             { name: "FAQ", path: "/faq" },
-          ]),
-          faqJsonLd(),
-        ]}
+          ],
+          extra: [faqJsonLd()],
+        })}
       />
       <PageHero
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "FAQ", path: "/faq" },
+        ]}
         title={
           <>
             Frequently asked <span className="accent">questions</span>

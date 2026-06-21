@@ -3,7 +3,7 @@ import { siteConfig } from "@/lib/site";
 
 export function ProcessSteps() {
   return (
-    <section className="section section-white">
+    <section className="section section-white" id="process">
       <div className="container-site">
         <SectionHeader
           tag="How it works"

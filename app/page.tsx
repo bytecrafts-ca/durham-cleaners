@@ -15,7 +15,7 @@ import { ProcessSteps } from "@/components/ProcessSteps";
 import { RequestServiceSection } from "@/components/RequestServiceSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ServicesBanner } from "@/components/ServicesBanner";
-import { faqJsonLd } from "@/lib/seo";
+import { homePageJsonLd } from "@/lib/seo";
 import { features, siteConfig, whyChooseUs } from "@/lib/site";
 
 export { rootMetadata as metadata } from "@/lib/seo";
@@ -30,7 +30,7 @@ const featureIcons = {
 export default function HomePage() {
   return (
     <>
-      <JsonLd data={faqJsonLd()} />
+      <JsonLd data={homePageJsonLd()} />
       <header className="hero">
         <div className="hero-bg">
           <video

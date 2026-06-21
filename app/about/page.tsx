@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
-import { breadcrumbJsonLd, createPageMetadata } from "@/lib/seo";
+import { buildPageJsonLd, createPageMetadata } from "@/lib/seo";
 import { siteConfig, whyChooseUs } from "@/lib/site";
 
 export const metadata = createPageMetadata({
@@ -16,12 +16,22 @@ export default function AboutPage() {
   return (
     <>
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "About", path: "/about" },
-        ])}
+        data={buildPageJsonLd({
+          path: "/about",
+          title: `About ${siteConfig.name}`,
+          description: siteConfig.about.body,
+          breadcrumbs: [
+            { name: "Home", path: "/" },
+            { name: "About", path: "/about" },
+          ],
+          pageType: "AboutPage",
+        })}
       />
       <PageHero
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "About", path: "/about" },
+        ]}
         title={
           <>
             About <span className="accent">Durham Cleaners</span>

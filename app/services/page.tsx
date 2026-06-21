@@ -2,7 +2,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
-import { breadcrumbJsonLd, createPageMetadata } from "@/lib/seo";
+import { buildPageJsonLd, createPageMetadata, servicesItemListJsonLd } from "@/lib/seo";
 import { services, siteConfig } from "@/lib/site";
 
 export const metadata = createPageMetadata({
@@ -17,12 +17,23 @@ export default function ServicesPage() {
   return (
     <>
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Services", path: "/services" },
-        ])}
+        data={buildPageJsonLd({
+          path: "/services",
+          title: "Cleaning Services — Residential, Commercial & Industrial",
+          description:
+            "One-time, ongoing, deep, move-in/out, post-renovation, Airbnb, and commercial cleaning across Durham Region and GTA.",
+          breadcrumbs: [
+            { name: "Home", path: "/" },
+            { name: "Services", path: "/services" },
+          ],
+          extra: [servicesItemListJsonLd()],
+        })}
       />
       <PageHero
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+        ]}
         title={
           <>
             Our cleaning <span className="accent">services</span>

@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
-import { breadcrumbJsonLd, createPageMetadata } from "@/lib/seo";
+import { buildPageJsonLd, createPageMetadata, imageGalleryJsonLd } from "@/lib/seo";
 import { galleryImages, siteConfig } from "@/lib/site";
 
 export const metadata = createPageMetadata({
@@ -16,12 +16,23 @@ export default function GalleryPage() {
   return (
     <>
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "Gallery", path: "/gallery" },
-        ])}
+        data={buildPageJsonLd({
+          path: "/gallery",
+          title: "Gallery — Our Cleaning Work",
+          description:
+            "Before-and-after cleaning results from Durham Cleaners across Durham Region and GTA.",
+          breadcrumbs: [
+            { name: "Home", path: "/" },
+            { name: "Gallery", path: "/gallery" },
+          ],
+          extra: [imageGalleryJsonLd()],
+        })}
       />
       <PageHero
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Gallery", path: "/gallery" },
+        ]}
         title={
           <>
             Our <span className="accent">work</span>

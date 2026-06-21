@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
-import { faqs, reviews, siteConfig } from "@/lib/site";
+import { faqs, galleryImages, reviews, services, siteConfig } from "@/lib/site";
 
 export function getSiteUrl(): string {
   const url = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.siteUrl;
   return url.replace(/\/$/, "");
+}
+
+function absoluteUrl(path: string): string {
+  const siteUrl = getSiteUrl();
+  return path === "/" ? siteUrl : `${siteUrl}${path}`;
+}
+
+function absoluteAsset(path: string): string {
+  return path.startsWith("http") ? path : `${getSiteUrl()}${path}`;
 }
 
 type PageMetadataInput = {
@@ -25,7 +34,7 @@ export function createPageMetadata({
 }: PageMetadataInput): Metadata {
   const siteUrl = getSiteUrl();
   const canonical = path === "/" ? siteUrl : `${siteUrl}${path}`;
-  const image = ogImage ?? siteConfig.heroImage;
+  const image = ogImage ?? "/opengraph-image";
   const imageUrl = image.startsWith("http") ? image : `${siteUrl}${image}`;
   const allKeywords = [...siteConfig.seo.keywords, ...keywords] as string[];
 
@@ -33,7 +42,10 @@ export function createPageMetadata({
     title,
     description,
     keywords: allKeywords,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      languages: { "en-CA": canonical },
+    },
     robots: noIndex
       ? { index: false, follow: false }
       : {
@@ -59,7 +71,7 @@ export function createPageMetadata({
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} — professional cleaning in Durham Region`,
+          alt: `${siteConfig.name} — professional cleaning in Durham Region and GTA`,
         },
       ],
     },
@@ -71,6 +83,21 @@ export function createPageMetadata({
     },
   };
 }
+
+const businessMetaTags = {
+  "geo.region": "CA-ON",
+  "geo.placename": "Courtice",
+  "geo.position": `${siteConfig.seo.geo.latitude};${siteConfig.seo.geo.longitude}`,
+  ICBM: `${siteConfig.seo.geo.latitude}, ${siteConfig.seo.geo.longitude}`,
+  "business:contact_data:street_address": "57 Foxhunt Trail",
+  "business:contact_data:locality": "Courtice",
+  "business:contact_data:region": "ON",
+  "business:contact_data:postal_code": "L1E 1E4",
+  "business:contact_data:country_name": "Canada",
+  "business:contact_data:email": siteConfig.contact.email,
+  "business:contact_data:phone_number": siteConfig.contact.phoneTel,
+  "business:contact_data:website": getSiteUrl(),
+};
 
 export const rootMetadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -84,6 +111,8 @@ export const rootMetadata: Metadata = {
   creator: siteConfig.name,
   publisher: siteConfig.name,
   category: "Home Services",
+  applicationName: siteConfig.name,
+  referrer: "origin-when-cross-origin",
   formatDetection: {
     email: true,
     address: true,
@@ -102,6 +131,7 @@ export const rootMetadata: Metadata = {
   },
   alternates: {
     canonical: getSiteUrl(),
+    languages: { "en-CA": getSiteUrl() },
   },
   openGraph: {
     title: siteConfig.seo.defaultTitle,
@@ -112,10 +142,10 @@ export const rootMetadata: Metadata = {
     type: "website",
     images: [
       {
-        url: siteConfig.heroImage,
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} — professional cleaning in Durham Region`,
+        alt: `${siteConfig.name} — professional cleaning in Durham Region and GTA`,
       },
     ],
   },
@@ -123,21 +153,22 @@ export const rootMetadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.seo.defaultTitle,
     description: siteConfig.seo.defaultDescription,
-    images: [siteConfig.heroImage],
+    images: ["/opengraph-image"],
   },
   icons: {
-    icon: siteConfig.logoImage,
-    apple: siteConfig.logoImage,
+    icon: [{ url: siteConfig.logoImage, type: "image/jpeg" }],
+    apple: [{ url: siteConfig.logoImage, type: "image/jpeg" }],
   },
+  manifest: "/manifest.webmanifest",
   verification: {
     google: siteConfig.seo.googleSiteVerification,
   },
-  other: {
-    "geo.region": "CA-ON",
-    "geo.placename": "Courtice",
-    "geo.position": `${siteConfig.seo.geo.latitude};${siteConfig.seo.geo.longitude}`,
-    ICBM: `${siteConfig.seo.geo.latitude}, ${siteConfig.seo.geo.longitude}`,
+  appleWebApp: {
+    capable: true,
+    title: siteConfig.name,
+    statusBarStyle: "black-translucent",
   },
+  other: businessMetaTags,
 };
 
 export const publicRoutes = [
@@ -150,9 +181,28 @@ export const publicRoutes = [
   { path: "/faq", changeFrequency: "monthly" as const, priority: 0.75 },
 ];
 
-function absoluteUrl(path: string): string {
-  const siteUrl = getSiteUrl();
-  return path === "/" ? siteUrl : `${siteUrl}${path}`;
+function reviewSchema(review: (typeof reviews)[number]) {
+  return {
+    "@type": "Review" as const,
+    author: { "@type": "Person" as const, name: review.author },
+    reviewRating: {
+      "@type": "Rating" as const,
+      ratingValue: review.rating,
+      bestRating: 5,
+    },
+    reviewBody: review.text,
+  };
+}
+
+export function aggregateRatingJsonLd() {
+  return {
+    "@type": "AggregateRating" as const,
+    ratingValue: siteConfig.seo.averageRating,
+    bestRating: 5,
+    worstRating: 1,
+    ratingCount: reviews.length,
+    reviewCount: reviews.length,
+  };
 }
 
 export function organizationJsonLd() {
@@ -163,12 +213,14 @@ export function organizationJsonLd() {
     "@id": `${siteUrl}/#organization`,
     name: siteConfig.name,
     url: siteUrl,
-    logo: `${siteUrl}${siteConfig.logoImage}`,
-    image: `${siteUrl}${siteConfig.heroImage}`,
+    logo: absoluteAsset(siteConfig.logoImage),
+    image: absoluteAsset(siteConfig.heroImage),
     description: siteConfig.seo.defaultDescription,
     email: siteConfig.contact.email,
     telephone: siteConfig.contact.phoneTel,
-    sameAs: [siteConfig.social.instagram, siteConfig.social.facebook],
+    foundingDate: siteConfig.about.since,
+    knowsAbout: siteConfig.seo.knowsAbout,
+    sameAs: [siteConfig.social.instagram, siteConfig.social.facebook, siteConfig.social.google],
     areaServed: siteConfig.seo.areaServed.map((area) => ({
       "@type": "Place",
       name: area,
@@ -180,16 +232,18 @@ export function localBusinessJsonLd() {
   const siteUrl = getSiteUrl();
   return {
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "CleaningService"],
+    "@type": ["LocalBusiness", "CleaningService", "ProfessionalService"],
     "@id": `${siteUrl}/#business`,
     name: siteConfig.name,
     url: siteUrl,
-    image: `${siteUrl}${siteConfig.heroImage}`,
-    logo: `${siteUrl}${siteConfig.logoImage}`,
+    image: [absoluteAsset(siteConfig.heroImage), absoluteAsset(siteConfig.logoImage)],
+    logo: absoluteAsset(siteConfig.logoImage),
     description: siteConfig.seo.defaultDescription,
     telephone: siteConfig.contact.phoneTel,
     email: siteConfig.contact.email,
     priceRange: siteConfig.seo.priceRange,
+    foundingDate: siteConfig.about.since,
+    knowsAbout: siteConfig.seo.knowsAbout,
     areaServed: siteConfig.seo.areaServed,
     geo: {
       "@type": "GeoCoordinates",
@@ -210,17 +264,43 @@ export function localBusinessJsonLd() {
       opens: entry.opens,
       closes: entry.closes,
     })),
+    aggregateRating: aggregateRatingJsonLd(),
+    review: reviews.map(reviewSchema),
     sameAs: [siteConfig.social.instagram, siteConfig.social.facebook, siteConfig.social.google],
-    review: reviews.map((review) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: review.author },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: review.rating,
-        bestRating: 5,
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Durham Cleaners Services",
+      itemListElement: services.map((service, index) => ({
+        "@type": "Offer",
+        position: index + 1,
+        itemOffered: {
+          "@type": "Service",
+          name: service.title,
+          description: service.description,
+          provider: { "@id": `${siteUrl}/#business` },
+          areaServed: siteConfig.seo.areaServed,
+        },
+      })),
+    },
+    potentialAction: [
+      {
+        "@type": "CommunicateAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${siteUrl}/contact`,
+          actionPlatform: [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/MobileWebPlatform",
+          ],
+        },
+        name: "Request a cleaning quote",
       },
-      reviewBody: review.text,
-    })),
+      {
+        "@type": "CommunicateAction",
+        target: `tel:${siteConfig.contact.phoneTel}`,
+        name: "Call Durham Cleaners",
+      },
+    ],
   };
 }
 
@@ -235,6 +315,33 @@ export function websiteJsonLd() {
     description: siteConfig.seo.defaultDescription,
     publisher: { "@id": `${siteUrl}/#organization` },
     inLanguage: "en-CA",
+    copyrightHolder: { "@id": `${siteUrl}/#organization` },
+  };
+}
+
+export function webPageJsonLd({
+  path,
+  title,
+  description,
+  type = "WebPage",
+}: {
+  path: string;
+  title: string;
+  description: string;
+  type?: string;
+}) {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${absoluteUrl(path)}#webpage`,
+    url: absoluteUrl(path),
+    name: title,
+    description,
+    isPartOf: { "@id": `${siteUrl}/#website` },
+    about: { "@id": `${siteUrl}/#business` },
+    inLanguage: "en-CA",
+    primaryImageOfPage: absoluteAsset(siteConfig.heroImage),
   };
 }
 
@@ -266,6 +373,149 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
   };
 }
 
+export function servicesItemListJsonLd() {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Durham Cleaners Cleaning Services",
+    itemListElement: services.map((service, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Service",
+        "@id": `${siteUrl}/services#${service.id}`,
+        name: service.title,
+        description: service.description,
+        provider: { "@id": `${siteUrl}/#business` },
+        areaServed: siteConfig.seo.areaServed,
+        serviceType: service.title,
+      },
+    })),
+  };
+}
+
+export function imageGalleryJsonLd() {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    name: "Durham Cleaners Work Gallery",
+    description: "Before-and-after cleaning results from Durham Cleaners across Durham Region and GTA.",
+    url: `${siteUrl}/gallery`,
+    image: galleryImages.map((image) => ({
+      "@type": "ImageObject",
+      contentUrl: absoluteAsset(image.src),
+      name: image.alt,
+      description: image.alt,
+    })),
+  };
+}
+
+export function reviewsPageJsonLd() {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${siteUrl}/testimonials#webpage`,
+    name: "Durham Cleaners Client Testimonials",
+    url: `${siteUrl}/testimonials`,
+    mainEntity: {
+      "@type": "LocalBusiness",
+      "@id": `${siteUrl}/#business`,
+      name: siteConfig.name,
+      aggregateRating: aggregateRatingJsonLd(),
+      review: reviews.map(reviewSchema),
+    },
+  };
+}
+
+export function howToJsonLd() {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How to book Durham Cleaners",
+    description: "Book professional cleaning in three simple steps with Durham Cleaners.",
+    step: siteConfig.processSteps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.title,
+      text: step.description,
+      url: `${siteUrl}/#process`,
+    })),
+  };
+}
+
+export function contactPageJsonLd() {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${siteUrl}/contact#webpage`,
+    url: `${siteUrl}/contact`,
+    name: "Contact Durham Cleaners",
+    description: `Request a quote from Durham Cleaners. Call ${siteConfig.contact.phone}, email ${siteConfig.contact.email}, or use the online form.`,
+    mainEntity: { "@id": `${siteUrl}/#business` },
+  };
+}
+
+export function aboutPageJsonLd() {
+  return webPageJsonLd({
+    path: "/about",
+    title: `About ${siteConfig.name}`,
+    description: siteConfig.about.body,
+    type: "AboutPage",
+  });
+}
+
+type PageJsonLdInput = {
+  path: string;
+  title: string;
+  description: string;
+  breadcrumbs: { name: string; path: string }[];
+  extra?: Record<string, unknown>[];
+  pageType?: string;
+};
+
+export function buildPageJsonLd({
+  path,
+  title,
+  description,
+  breadcrumbs,
+  extra = [],
+  pageType,
+}: PageJsonLdInput) {
+  return [
+    breadcrumbJsonLd(breadcrumbs),
+    webPageJsonLd({ path, title, description, type: pageType }),
+    ...extra,
+  ];
+}
+
 export function globalJsonLd() {
-  return [organizationJsonLd(), localBusinessJsonLd(), websiteJsonLd()];
+  const stripContext = ({ "@context": _, ...node }: Record<string, unknown>) => node;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      stripContext(organizationJsonLd()),
+      stripContext(localBusinessJsonLd()),
+      stripContext(websiteJsonLd()),
+    ],
+  };
+}
+
+export function homePageJsonLd() {
+  return [
+    webPageJsonLd({
+      path: "/",
+      title: siteConfig.seo.defaultTitle,
+      description: siteConfig.seo.defaultDescription,
+      type: "WebPage",
+    }),
+    faqJsonLd(),
+    howToJsonLd(),
+    servicesItemListJsonLd(),
+  ];
 }
