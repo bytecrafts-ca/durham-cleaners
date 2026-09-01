@@ -15,8 +15,9 @@ import { ProcessSteps } from "@/components/ProcessSteps";
 import { RequestServiceSection } from "@/components/RequestServiceSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ServicesBanner } from "@/components/ServicesBanner";
+import { TrustBar } from "@/components/TrustBar";
 import { homePageJsonLd } from "@/lib/seo";
-import { features, siteConfig, whyChooseUs } from "@/lib/site";
+import { cityPageLinks, features, siteConfig, whyChooseUs } from "@/lib/site";
 
 export { rootMetadata as metadata } from "@/lib/seo";
 
@@ -49,9 +50,12 @@ export default function HomePage() {
           <div className="hero-text">
             <p className="hero-eyebrow">{siteConfig.tagline}</p>
             <h1>
-              Residential &amp; commercial <span className="accent">cleaning</span>
+              House cleaning Durham Region <span className="accent">since 1995</span>
             </h1>
             <p className="hero-sub">{siteConfig.heroSubtitle}</p>
+            <p className="hero-areas">
+              Pickering · Ajax · Whitby · Oshawa · Courtice · Bowmanville · GTA
+            </p>
             <a
               href={siteConfig.social.google}
               target="_blank"
@@ -91,7 +95,44 @@ export default function HomePage() {
         <ChevronDown className="h-4 w-4" aria-hidden />
       </div>
 
+      <TrustBar />
+
       <ServicesBanner />
+
+      <section className="section section-white">
+        <div className="container-site prose-local max-w-3xl">
+          <h2>Local house &amp; commercial cleaning across Durham Region</h2>
+          <p>{siteConfig.homeLongCopy}</p>
+          <p>
+            Whether you need maid service in Pickering, move-out cleaning in Ajax, office
+            janitorial in Whitby, or industrial cleaning in Oshawa, Durham Cleaners delivers
+            the same trained, insured, eco-friendly standard on every visit. Explore our{" "}
+            <Link href="/residential-cleaning" className="text-brand-dark font-semibold">
+              residential
+            </Link>
+            ,{" "}
+            <Link href="/commercial-cleaning" className="text-brand-dark font-semibold">
+              commercial
+            </Link>
+            , and{" "}
+            <Link href="/deep-cleaning" className="text-brand-dark font-semibold">
+              deep cleaning
+            </Link>{" "}
+            services or read our{" "}
+            <Link href="/blog" className="text-brand-dark font-semibold">
+              local cleaning guides
+            </Link>
+            .
+          </p>
+          <div className="city-links-row">
+            {cityPageLinks.map(({ href, label }) => (
+              <Link key={href} href={href} className="btn btn-outline btn-sm">
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <RequestServiceSection />
 

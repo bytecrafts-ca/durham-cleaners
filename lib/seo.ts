@@ -1,5 +1,20 @@
 import type { Metadata } from "next";
+import type { FaqItem } from "@/lib/local-seo/types";
+import type { ServicePageData } from "@/lib/local-seo/types";
+import type { BlogPost } from "@/lib/local-seo/types";
 import { faqs, galleryImages, reviews, services, siteConfig } from "@/lib/site";
+
+const serviceSlugMap: Record<string, string> = {
+  "one-time": "residential-cleaning",
+  ongoing: "residential-cleaning",
+  move: "move-in-move-out-cleaning",
+  deep: "deep-cleaning",
+  renovation: "post-renovation-cleaning",
+  realestate: "real-estate-cleaning",
+  airbnb: "airbnb-cleaning",
+  commercial: "commercial-cleaning",
+  industrial: "industrial-cleaning",
+};
 
 export function getSiteUrl(): string {
   const url = process.env.NEXT_PUBLIC_SITE_URL ?? siteConfig.siteUrl;
@@ -176,9 +191,13 @@ export const publicRoutes = [
   { path: "/services", changeFrequency: "monthly" as const, priority: 0.9 },
   { path: "/gallery", changeFrequency: "weekly" as const, priority: 0.8 },
   { path: "/testimonials", changeFrequency: "monthly" as const, priority: 0.75 },
+  { path: "/reviews", changeFrequency: "monthly" as const, priority: 0.8 },
   { path: "/about", changeFrequency: "monthly" as const, priority: 0.7 },
   { path: "/contact", changeFrequency: "monthly" as const, priority: 0.85 },
   { path: "/faq", changeFrequency: "monthly" as const, priority: 0.75 },
+  { path: "/resources", changeFrequency: "monthly" as const, priority: 0.6 },
+  { path: "/blog", changeFrequency: "weekly" as const, priority: 0.85 },
+  { path: "/thank-you", changeFrequency: "yearly" as const, priority: 0.3 },
 ];
 
 function reviewSchema(review: (typeof reviews)[number]) {
@@ -244,7 +263,16 @@ export function localBusinessJsonLd() {
     priceRange: siteConfig.seo.priceRange,
     foundingDate: siteConfig.about.since,
     knowsAbout: siteConfig.seo.knowsAbout,
-    areaServed: siteConfig.seo.areaServed,
+    areaServed: [
+      { "@type": "City", name: "Pickering" },
+      { "@type": "City", name: "Ajax" },
+      { "@type": "City", name: "Whitby" },
+      { "@type": "City", name: "Oshawa" },
+      { "@type": "City", name: "Courtice" },
+      { "@type": "City", name: "Bowmanville" },
+      { "@type": "AdministrativeArea", name: "Durham Region" },
+      { "@type": "AdministrativeArea", name: "Greater Toronto Area" },
+    ],
     geo: {
       "@type": "GeoCoordinates",
       latitude: siteConfig.seo.geo.latitude,
@@ -270,17 +298,40 @@ export function localBusinessJsonLd() {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Durham Cleaners Services",
-      itemListElement: services.map((service, index) => ({
-        "@type": "Offer",
-        position: index + 1,
-        itemOffered: {
-          "@type": "Service",
-          name: service.title,
-          description: service.description,
-          provider: { "@id": `${siteUrl}/#business` },
-          areaServed: siteConfig.seo.areaServed,
+      itemListElement: [
+        {
+          "@type": "Offer",
+          name: siteConfig.discounts.firstTime,
+          priceCurrency: "CAD",
+          eligibleCustomerType: "NewCustomer",
+          itemOffered: { "@type": "Service", name: "First-time cleaning" },
         },
-      })),
+        {
+          "@type": "Offer",
+          name: siteConfig.discounts.biWeekly,
+          priceCurrency: "CAD",
+          itemOffered: { "@type": "Service", name: "Bi-weekly cleaning" },
+        },
+        ...services.map((service, index) => ({
+          "@type": "Offer",
+          position: index + 1,
+          itemOffered: {
+            "@type": "Service",
+            name: service.title,
+            description: service.description,
+            url: `${siteUrl}/${serviceSlugMap[service.id] ?? "services"}`,
+            provider: { "@id": `${siteUrl}/#business` },
+          },
+        })),
+      ],
+    },
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: siteConfig.contact.phoneTel,
+      email: siteConfig.contact.email,
+      contactType: "customer service",
+      areaServed: "CA",
+      availableLanguage: "English",
     },
     potentialAction: [
       {
@@ -316,6 +367,12 @@ export function websiteJsonLd() {
     publisher: { "@id": `${siteUrl}/#organization` },
     inLanguage: "en-CA",
     copyrightHolder: { "@id": `${siteUrl}/#organization` },
+    creator: {
+      "@type": "Organization",
+      name: "Sutrel",
+      url: "https://sutrel.ca",
+      email: "inquire@sutrel.ca",
+    },
   };
 }
 
@@ -384,7 +441,7 @@ export function servicesItemListJsonLd() {
       position: index + 1,
       item: {
         "@type": "Service",
-        "@id": `${siteUrl}/services#${service.id}`,
+        "@id": `${siteUrl}/${serviceSlugMap[service.id] ?? "services"}`,
         name: service.title,
         description: service.description,
         provider: { "@id": `${siteUrl}/#business` },
@@ -518,4 +575,70 @@ export function homePageJsonLd() {
     howToJsonLd(),
     servicesItemListJsonLd(),
   ];
+}
+
+export function faqPageJsonLdFromItems(items: FaqItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  };
+}
+
+export function serviceSchemaJsonLd(data: ServicePageData) {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${siteUrl}/${data.slug}#service`,
+    name: data.title,
+    description: data.metaDescription,
+    url: `${siteUrl}/${data.slug}`,
+    provider: { "@id": `${siteUrl}/#business` },
+    areaServed: siteConfig.seo.areaServed,
+    serviceType: data.title,
+  };
+}
+
+export function blogPostJsonLd(post: BlogPost) {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.metaDescription,
+    datePublished: post.publishedAt,
+    author: { "@type": "Organization", name: siteConfig.name },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+    inLanguage: "en-CA",
+  };
+}
+
+export function articleJsonLd({
+  path,
+  title,
+  description,
+  datePublished,
+}: {
+  path: string;
+  title: string;
+  description: string;
+  datePublished?: string;
+}) {
+  const siteUrl = getSiteUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    datePublished,
+    author: { "@type": "Organization", name: siteConfig.name },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    mainEntityOfPage: absoluteUrl(path),
+  };
 }

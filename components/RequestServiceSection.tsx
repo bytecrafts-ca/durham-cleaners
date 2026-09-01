@@ -1,8 +1,11 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { trackGenerateLead } from "@/components/Analytics";
 import { SectionHeader } from "@/components/SectionHeader";
-import { services as serviceOptions, siteConfig } from "@/lib/site";
+import { servicePages } from "@/lib/local-seo/service-pages";
+import { siteConfig } from "@/lib/site";
 
 interface RequestServiceFormProps {
   compact?: boolean;
@@ -12,6 +15,7 @@ type FormStatus = "idle" | "loading" | "success" | "error";
 
 export function RequestServiceForm({ compact = false }: RequestServiceFormProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
+  const router = useRouter();
   const { contact } = siteConfig;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -43,7 +47,9 @@ export function RequestServiceForm({ compact = false }: RequestServiceFormProps)
       }
 
       setStatus("success");
+      trackGenerateLead(service);
       form.reset();
+      router.push("/thank-you");
     } catch {
       setStatus("error");
     }
@@ -94,8 +100,8 @@ export function RequestServiceForm({ compact = false }: RequestServiceFormProps)
             <option value="" disabled>
               Choose an option
             </option>
-            {serviceOptions.map((service) => (
-              <option key={service.id} value={service.title}>
+            {servicePages.map((service) => (
+              <option key={service.slug} value={service.formServiceValue}>
                 {service.title}
               </option>
             ))}
@@ -180,6 +186,10 @@ export function RequestServiceSection({ id = "request" }: RequestServiceSectionP
           }
           subtitle={siteConfig.requestNote}
         />
+
+        <p className="form-response-note">
+          We aim to contact you within <strong>4 hours</strong> with a quote.
+        </p>
 
         <RequestServiceForm />
 

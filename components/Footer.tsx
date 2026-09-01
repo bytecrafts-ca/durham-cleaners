@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Instagram, MapPin } from "lucide-react";
-import { navLinks, siteConfig } from "@/lib/site";
+import { externalGuides } from "@/lib/local-seo/resources";
+import { cityPageLinks, navLinks, servicePageLinks, siteConfig } from "@/lib/site";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -89,6 +90,50 @@ export function Footer({ hideCta = false }: { hideCta?: boolean }) {
         </div>
 
         <div className="footer-links">
+          <h4>Service areas</h4>
+          <ul>
+            {cityPageLinks.map(({ href, label }) => (
+              <li key={href}>
+                <Link href={href}>{label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="footer-links">
+          <h4>Services</h4>
+          <ul>
+            {servicePageLinks.map(({ href, label }) => (
+              <li key={href}>
+                <Link href={href}>{label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="footer-links">
+          <h4>Resources</h4>
+          <ul>
+            <li>
+              <Link href="/blog">Blog</Link>
+            </li>
+            <li>
+              <Link href="/resources">Guides &amp; case studies</Link>
+            </li>
+            <li>
+              <Link href="/reviews">Reviews</Link>
+            </li>
+            {externalGuides.map((guide) => (
+              <li key={guide.href}>
+                <a href={guide.href} target="_blank" rel="noopener noreferrer">
+                  {guide.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="footer-links">
           <h4>Contact</h4>
           <ul>
             <li>
@@ -156,6 +201,15 @@ export function Footer({ hideCta = false }: { hideCta?: boolean }) {
           <span aria-hidden> · </span>
           <a href={`mailto:${contact.email}`} className="text-[var(--gray-400)] hover:text-brand">
             {contact.email}
+          </a>
+          <span aria-hidden> · </span>
+          <a
+            href="https://sutrel.ca"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--gray-400)] hover:text-brand"
+          >
+            Website by Sutrel
           </a>
         </p>
       </div>

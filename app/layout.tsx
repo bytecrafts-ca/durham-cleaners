@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { Header } from "@/components/Header";
 import { JsonLd } from "@/components/JsonLd";
 import { MobileStickyCTA } from "@/components/MobileStickyCTA";
+import { Analytics } from "@/components/Analytics";
 import { SkipLink } from "@/components/SkipLink";
 import { globalJsonLd, rootMetadata } from "@/lib/seo";
 import "./globals.css";
@@ -28,6 +29,7 @@ export default function RootLayout({
     <html lang="en-CA" className={`${display.variable} ${sans.variable}`}>
       <body className="font-sans">
         <SkipLink />
+        <Analytics />
         <JsonLd data={globalJsonLd()} />
         <Header />
         <main id="main-content">{children}</main>

@@ -7,14 +7,16 @@ export const siteConfig = {
   instagramHandle: "@durhamcleaners",
   tagline: "Premium cleaning services serving Durham Region and GTA",
   heroSubtitle:
-    "Durham Cleaners offer the best quality cleaning service in Durham Region and the GTA.",
+    "House and commercial cleaning across Pickering, Ajax, Whitby, Oshawa, and Durham Region. Eco-friendly products. Quote within 4 hours.",
+  homeLongCopy:
+    "Durham Cleaners is your local cleaning team based in Courtice, serving homeowners, landlords, REALTORS, and businesses across Durham Region since 1995. From weekly house cleaning in Pickering to move-out cleans in Ajax, deep cleaning in Whitby, and commercial janitorial in Oshawa, we bring trained, insured crews and eco-friendly green products to every job. First-time customers save 15%. Bi-weekly plans save 15% too. Submit the form or call (416) 305-5187 and we aim to respond within 4 hours.",
   homeIntro:
     "Serving the Durham region since 1995. Eco-friendly green cleaning products, professionally trained cleaners, and a flawless finish every time.",
   description: "Home, commercial & industrial cleaning in Durham Region.",
   seo: {
-    defaultTitle: "Durham Cleaners | Residential & Commercial Cleaning Durham Region & GTA",
+    defaultTitle: "House & Commercial Cleaning Durham Region | Durham Cleaners Since 1995",
     defaultDescription:
-      "Durham Cleaners — professional residential, commercial, and industrial cleaning in Durham Region and the GTA. Courtice, Oshawa, Whitby, Ajax, Pickering & Bowmanville. Eco-friendly products. 15% off first-time & bi-weekly bookings. Call (416) 305-5187 or request a quote online.",
+      "House and commercial cleaning in Pickering, Ajax, Whitby, Oshawa and Durham Region. Eco-friendly products, 15% off first visit and bi-weekly bookings. Quote within 4 hours. Call (416) 305-5187.",
     keywords: [
       "Durham Cleaners",
       "Durham cleaners",
@@ -83,7 +85,7 @@ export const siteConfig = {
   heroVideo: "/hero.mp4",
   logoImage: "/logo.jpeg",
   aboutImage: "/about-cleaning.jpg",
-  siteUrl: "https://durhamcleaners.vercel.app",
+  siteUrl: "https://durhamcleaners.ca",
   contact: {
     phone: "(416) 305-5187",
     phoneTel: "+14163055187",
@@ -140,10 +142,27 @@ export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/#request", label: "Request" },
   { href: "/services", label: "Services" },
+  { href: "/blog", label: "Blog" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/testimonials", label: "Testimonials" },
+  { href: "/reviews", label: "Reviews" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+] as const;
+
+export const cityPageLinks = [
+  { href: "/house-cleaning-pickering", label: "Pickering" },
+  { href: "/house-cleaning-ajax", label: "Ajax" },
+  { href: "/house-cleaning-whitby", label: "Whitby" },
+  { href: "/house-cleaning-oshawa", label: "Oshawa" },
+  { href: "/house-cleaning-durham-region", label: "Durham Region" },
+] as const;
+
+export const servicePageLinks = [
+  { href: "/residential-cleaning", label: "Residential" },
+  { href: "/commercial-cleaning", label: "Commercial" },
+  { href: "/deep-cleaning", label: "Deep cleaning" },
+  { href: "/move-in-move-out-cleaning", label: "Move-in/out" },
+  { href: "/airbnb-cleaning", label: "Airbnb" },
 ] as const;
 
 export const features = [

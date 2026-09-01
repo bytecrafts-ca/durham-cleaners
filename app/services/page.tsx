@@ -3,7 +3,8 @@ import { JsonLd } from "@/components/JsonLd";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { buildPageJsonLd, createPageMetadata, servicesItemListJsonLd } from "@/lib/seo";
-import { services, siteConfig } from "@/lib/site";
+import { servicePages } from "@/lib/local-seo/service-pages";
+import { siteConfig } from "@/lib/site";
 
 export const metadata = createPageMetadata({
   title: "Cleaning Services — Residential, Commercial & Industrial",
@@ -54,10 +55,15 @@ export default function ServicesPage() {
             subtitle={`${siteConfig.discounts.firstTime}. ${siteConfig.discounts.biWeekly}.`}
           />
           <div className="grid gap-6 md:grid-cols-2">
-            {services.map((service) => (
-              <article key={service.id} className="service-card">
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
+            {servicePages.map((service) => (
+              <article key={service.slug} className="service-card">
+                <h3>
+                  <Link href={`/${service.slug}`}>{service.title}</Link>
+                </h3>
+                <p>{service.intro.slice(0, 220)}…</p>
+                <Link href={`/${service.slug}`} className="text-sm font-semibold text-brand-dark">
+                  Learn more →
+                </Link>
               </article>
             ))}
           </div>
