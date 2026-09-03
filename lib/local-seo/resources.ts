@@ -11,4 +11,5 @@ export const externalGuides = [
   },
 ] as const;
 
-export const googleReviewUrl = "https://www.google.com/maps/search/?api=1&query=Durham+Cleaners+57+Foxhunt+Trail+Courtice+ON";
+export const googleReviewUrl =
+  "https://www.google.com/maps/search/?api=1&query=Durham+Cleaners+Durham+Ontario";

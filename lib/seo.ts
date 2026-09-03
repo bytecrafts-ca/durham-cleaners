@@ -101,13 +101,9 @@ export function createPageMetadata({
 
 const businessMetaTags = {
   "geo.region": "CA-ON",
-  "geo.placename": "Courtice",
-  "geo.position": `${siteConfig.seo.geo.latitude};${siteConfig.seo.geo.longitude}`,
-  ICBM: `${siteConfig.seo.geo.latitude}, ${siteConfig.seo.geo.longitude}`,
-  "business:contact_data:street_address": "57 Foxhunt Trail",
-  "business:contact_data:locality": "Courtice",
+  "geo.placename": "Durham Region",
+  "business:contact_data:locality": "Durham Region",
   "business:contact_data:region": "ON",
-  "business:contact_data:postal_code": "L1E 1E4",
   "business:contact_data:country_name": "Canada",
   "business:contact_data:email": siteConfig.contact.email,
   "business:contact_data:phone_number": siteConfig.contact.phoneTel,
@@ -273,17 +269,10 @@ export function localBusinessJsonLd() {
       { "@type": "AdministrativeArea", name: "Durham Region" },
       { "@type": "AdministrativeArea", name: "Greater Toronto Area" },
     ],
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: siteConfig.seo.geo.latitude,
-      longitude: siteConfig.seo.geo.longitude,
-    },
     address: {
       "@type": "PostalAddress",
-      streetAddress: "57 Foxhunt Trail",
-      addressLocality: "Courtice",
+      addressLocality: "Durham Region",
       addressRegion: "ON",
-      postalCode: "L1E 1E4",
       addressCountry: "CA",
     },
     openingHoursSpecification: siteConfig.seo.openingHours.map((entry) => ({

@@ -4,7 +4,7 @@
 **Website:** https://durhamcleaners.ca  
 **Phone:** (416) 305-5187  
 **Email:** info@durhamcleaner.com  
-**Address:** 57 Foxhunt Trail, Courtice, ON L1E 1E4  
+**Service area:** Durham, Ontario (no public street address. service-area business)  
 **Review link (QR):** https://durhamcleaners.ca/review
 
 ---
@@ -160,8 +160,8 @@ We are sorry this did not meet your expectations. Please contact us directly at 
 Durham Cleaners
 (416) 305-5187
 https://durhamcleaners.ca
-Serving Durham Region, ON
-57 Foxhunt Trail, Courtice, ON L1E 1E4
+Serving Durham, Ontario
+(No public street address. set GBP as a service-area business)
 ```
 
 **Claim / update:**

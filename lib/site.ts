@@ -90,15 +90,15 @@ export const siteConfig = {
     phone: "(416) 305-5187",
     phoneTel: "+14163055187",
     email: "info@durhamcleaner.com",
-    address: "57 Foxhunt Trail, Courtice, ON L1E 1E4",
-    addressShort: "Courtice, ON",
+    address: "Durham, Ontario service area",
+    addressShort: "Durham, ON",
     formSubmitUrl: "https://formsubmit.co/ajax/info@durhamcleaner.com",
   },
   social: {
     instagram: "https://www.instagram.com/durhamcleaners/",
     facebook: "https://www.facebook.com/profile.php?id=61560764315834",
     google:
-      "https://www.google.com/maps/search/?api=1&query=Durham+Cleaners+57+Foxhunt+Trail+Courtice+ON",
+      "https://www.google.com/maps/search/?api=1&query=Durham+Cleaners+Durham+Ontario",
   },
   discounts: {
     firstTime: "15% off for first-time customers",

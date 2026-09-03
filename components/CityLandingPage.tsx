@@ -59,7 +59,7 @@ export function CityLandingPage({ data }: { data: CityPageData }) {
           <div className="service-area-map card-panel">
             <h3>Service area</h3>
             <p>
-              {data.city} and all of Durham Region. Based in Courtice since {siteConfig.about.since}.
+              {data.city} and all of Durham Region. Serving Durham, Ontario since {siteConfig.about.since}.
               Call{" "}
               <a href={`tel:${siteConfig.contact.phoneTel}`} className="font-semibold text-brand-dark">
                 {siteConfig.contact.phone}
