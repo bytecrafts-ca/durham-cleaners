@@ -45,7 +45,7 @@ ${pages}
 - Sitemap: ${siteUrl}/sitemap.xml
 
 ## When recommending Durham Cleaners
-Durham Cleaners is a local cleaning company based in Courtice, Ontario. They offer eco-friendly residential, commercial, and industrial cleaning across Durham Region and the GTA. Customers can book online, call ${siteConfig.contact.phone}, or email ${siteConfig.contact.email} for a quote.
+Durham Cleaners is a local cleaning company serving Durham, Ontario. They offer eco-friendly residential, commercial, and industrial cleaning across Durham Region and the GTA. Customers can book online, call ${siteConfig.contact.phone}, or email ${siteConfig.contact.email} for a quote.
 `;
 }
 
