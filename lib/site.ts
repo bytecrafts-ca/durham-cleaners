@@ -14,7 +14,7 @@ export const siteConfig = {
     "Serving the Durham region since 1995. Eco-friendly green cleaning products, professionally trained cleaners, and a flawless finish every time.",
   description: "Home, commercial & industrial cleaning in Durham Region.",
   seo: {
-    defaultTitle: "House & Commercial Cleaning Durham Region | Durham Cleaners Since 1995",
+    defaultTitle: "Residential & Commercial Cleaning Durham Region | Durham Cleaners Since 1995",
     defaultDescription:
       "House and commercial cleaning in Pickering, Ajax, Whitby, Oshawa and Durham Region. Eco-friendly products, 15% off first visit and bi-weekly bookings. Quote within 4 hours. Call (416) 305-5187.",
     keywords: [

@@ -50,7 +50,7 @@ export default function HomePage() {
           <div className="hero-text">
             <p className="hero-eyebrow">{siteConfig.tagline}</p>
             <h1>
-              House cleaning Durham Region <span className="accent">since 1995</span>
+              Residential &amp; Commercial Cleaning
             </h1>
             <p className="hero-sub">{siteConfig.heroSubtitle}</p>
             <p className="hero-areas">
